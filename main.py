@@ -10,13 +10,13 @@ import uvicorn
 
 IMAGES_PATH = "./images"
 THUMBNAILS_PATH = "./thumbnails"
-THUMBNAILS_REGEX = "([0-9]{1,4})+x([0-9]{1,4})+"
+THUMBNAILS_REGEX = "(^[\d]{1,4})x([\d]{1,4}$)"
 
 app = FastAPI()
 
 @app.get("/")
 async def main():
-    return {"message": "Hello World"}
+    return {"message": "Dlabs.AI test project"}
 
 @app.post("/images")
 async def images(image: UploadFile = File(...)):

@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from PIL import Image
 import time
 
+THUMBNAIL_CACHE_TIME = 3600
 
 def prep_size(size):
     """
@@ -39,7 +40,7 @@ def check_thumbnail_exist(file_path):
         difference = datetime.now() - time_create
         
         # check if we are between 1 hour
-        if difference.seconds > 3600:
+        if difference.seconds > THUMBNAIL_CACHE_TIME:
             remove(file_path)
             return False
         else:
