@@ -14,6 +14,7 @@ Before run pip install -r requirements.txt please run:
 
 
 ***Upload image***
+
 curl -X POST "http://127.0.0.1:8000/images" -H  "accept: application/json" -H  "Content-Type: multipart/form-data" -F "image=@some_image.jpg"
 
 ***Get / generate thumbnail of random file***
@@ -28,6 +29,7 @@ What could be improve:
  - images saved as bloob in redis with expire date
 
 ***Build and run***
-cd myProject
-docker build -t myimage .
-docker run -d --name mycontainer -p 80:80 myimage
+
+- cd myProject
+- docker build -t myimage .
+- docker run -d --name mycontainer -p 80:80 myimage
