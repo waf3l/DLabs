@@ -1,7 +1,7 @@
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.responses import FileResponse
 from os import path, mkdir, listdir
-from helpers import prep_size, generate_thumbnail
+from helpers import prep_size, generate_thumbnail, check_dir_exist
 import re
 import random
 import uvicorn
@@ -13,18 +13,15 @@ THUMBNAILS_REGEX = "(^[\d]{1,4})x([\d]{1,4}$)"
 
 app = FastAPI()
 
+check_dir_exist(IMAGES_PATH)
+check_dir_exist(THUMBNAILS_PATH)
+
 @app.get("/")
 def main():
     return {"message": "Dlabs.AI test project"}
 
 @app.post("/images")
 async def images(image: UploadFile = File(...)):
-    if not path.exists(IMAGES_PATH):
-        mkdir(IMAGES_PATH)
-
-    if not path.exists(THUMBNAILS_PATH):
-        mkdir(THUMBNAILS_PATH)
-
     with open(path.join(IMAGES_PATH,image.filename),'wb+') as f:
         f.write(image.file.read())
         f.close()

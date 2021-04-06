@@ -5,6 +5,10 @@ import time
 
 THUMBNAIL_CACHE_TIME = 3600
 
+def check_dir_exist(media_path):
+    if not path.exists(media_path):
+        mkdir(media_path)
+
 def prep_size(size):
     """
     Transforms size to propare values and type
