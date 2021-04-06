@@ -15,7 +15,7 @@ THUMBNAILS_REGEX = "(^[\d]{1,4})x([\d]{1,4}$)"
 app = FastAPI()
 
 @app.get("/")
-async def main():
+def main():
     return {"message": "Dlabs.AI test project"}
 
 @app.post("/images")
@@ -23,9 +23,13 @@ async def images(image: UploadFile = File(...)):
     if not path.exists(IMAGES_PATH):
         mkdir(IMAGES_PATH)
 
+    if not path.exists(THUMBNAILS_PATH):
+        mkdir(THUMBNAILS_PATH)
+
     with open(path.join(IMAGES_PATH,image.filename),'wb+') as f:
         f.write(image.file.read())
         f.close()
+
     return {"filename": path.join(IMAGES_PATH,image.filename)}
 
 @app.get("/images/{size}")
