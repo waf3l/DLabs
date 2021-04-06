@@ -6,12 +6,13 @@ import re
 import random
 import uvicorn
 
-
+# App config
 IMAGES_PATH = "./images"
 THUMBNAILS_PATH = "./thumbnails"
 THUMBNAILS_REGEX = "(^[\d]{1,4})x([\d]{1,4}$)"
 
 app = FastAPI()
+
 
 check_dir_exist(IMAGES_PATH)
 check_dir_exist(THUMBNAILS_PATH)
