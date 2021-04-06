@@ -1,4 +1,5 @@
-Setup the dev env:
+***Setup the dev env:***
+
 - git clone
 - cd project direcotry
 - python3 -m venv /path/to/venv
@@ -8,6 +9,7 @@ Setup the dev env:
 
 
 ***Warning***
+
 Before run pip install -r requirements.txt please run:
 
 - pip install wheel
@@ -23,7 +25,8 @@ curl -X GET 'http://127.0.0.1:8000/images/8x8 --output thumbnail.jpg'
 
 Where the 8x8 is the size of thumbnail we want to get
 
-***Clear files from media storage***
+***Remove files from media storage***
+
 Delete all uploaded and generated files, to check if app will 
 return 404 when no images in database
 
