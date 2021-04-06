@@ -1,7 +1,6 @@
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.responses import FileResponse
 from os import path, mkdir, listdir
-from PIL import Image
 from helpers import prep_size, generate_thumbnail
 import re
 import random
@@ -53,11 +52,15 @@ async def get_thumbnail(size):
         # get list of all uploaded images
         files_list = listdir(IMAGES_PATH)
 
+        if len(files_list) == 0:
+            raise HTTPException(status_code=404, detail="No images in database")
+
         # select random file
         selected_file_no = random.randint(1,len(files_list))-1
 
         # split extension from file name
-        thumb_filename, thumb_file_extension = path.splitext(files_list[selected_file_no])
+        thumb_filename, thumb_file_extension = path.splitext(
+            files_list[selected_file_no])
         
         # create thumbnail file name with size information
         thumb_size_filename = thumb_filename+'_'+size_str+thumb_file_extension
