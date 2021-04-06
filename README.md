@@ -8,7 +8,7 @@ Setup the dev env:
 
 
 ***Warning***
-Before run pip install -f requirements.txt please run:
+Before run pip install -r requirements.txt please run:
 
 - pip install wheel
 
