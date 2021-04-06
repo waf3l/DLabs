@@ -33,13 +33,13 @@ def check_thumbnail_exist(file_path):
     if path.exists(file_path):
 
         # time create of the file
-        time_create = datetime.utcfromtimestamp(path.getctime(file_path))
+        time_create = datetime.fromtimestamp(path.getctime(file_path))
         
         # calculate the difference
         difference = datetime.now() - time_create
         
         # check if we are between 1 hour
-        if difference > timedelta(hours=1):
+        if difference.seconds > 3600:
             remove(file_path)
             return False
         else:
