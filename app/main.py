@@ -1,7 +1,7 @@
-from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi import FastAPI, File, UploadFile, HTTPException, BackgroundTasks
 from fastapi.responses import FileResponse
 from os import path, mkdir, listdir
-from helpers import prep_size, generate_thumbnail, check_dir_exist
+from helpers import prep_size, generate_thumbnail, check_dir_exist, delete_files
 import re
 import random
 import uvicorn
@@ -27,6 +27,18 @@ async def images(image: UploadFile = File(...)):
         f.close()
 
     return {"filename": path.join(IMAGES_PATH,image.filename)}
+
+@app.get("/clear/{what}")
+async def clear(what:str, background_tasks: BackgroundTasks):
+    if what == 'thumbnails':
+        background_tasks.add_task(delete_files, THUMBNAILS_PATH)
+        return {"status": 'task created'}
+    elif what == 'images':
+        background_tasks.add_task(delete_files, IMAGES_PATH)
+        return {"status": 'task created'}
+    else:
+        return {"status": 'error', "message":"wrong type to delete"}
+
 
 @app.get("/images/{size}")
 async def get_thumbnail(size):

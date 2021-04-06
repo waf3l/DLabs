@@ -5,9 +5,23 @@ import time
 
 THUMBNAIL_CACHE_TIME = 3600
 
-def check_dir_exist(media_path):
+def check_dir_exist(media_path,create=True):
+    """Check if directory exist
+
+    By default create directory if not exist
+
+    :param media_path: path to check
+    :param create: Optional param who drive the decision 
+        do we create directory if not exist
+    :returns boolen: True is exist , False if not exist
+    """
     if not path.exists(media_path):
-        mkdir(media_path)
+        if create:
+            mkdir(media_path)
+            return True
+        return False
+    else:
+        return True
 
 def prep_size(size):
     """
@@ -75,3 +89,16 @@ def generate_thumbnail(src_file_path, dst_file_path, size):
             return {"status": "error", "error_type": "OSError", "error_msg": str(e)}
     else:
         return None
+
+def delete_files(dir_path):
+    """ Delete files from selected direcotry
+
+    :param dir_path: folder where we want to remove all files
+    """
+    sts = check_dir_exist(dir_path, False)
+    if sts:
+        # get list of all uploaded images
+        files_list = listdir(dir_path)
+        if len(files_list) > 0:
+            for item in files_list:
+                remove(path.join(dir_path, item))
